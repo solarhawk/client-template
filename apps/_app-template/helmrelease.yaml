@@ -1,0 +1,46 @@
+# Template: Replace APP_NAME, REPO_NAME, CHART_NAME, CHART_VERSION
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: APP_NAME
+  namespace: dorkomen
+spec:
+  targetNamespace: APP_NAME
+  releaseName: APP_NAME
+  interval: 10m
+  chart:
+    spec:
+      # Option 1: From HelmRepository
+      chart: CHART_NAME
+      version: CHART_VERSION
+      sourceRef:
+        kind: HelmRepository
+        name: REPO_NAME
+        namespace: dorkomen
+      # Option 2: From GitRepository (uncomment and configure)
+      # chart: path/to/chart
+      # sourceRef:
+      #   kind: GitRepository
+      #   name: APP_NAME
+      #   namespace: dorkomen
+      interval: 5m
+  install:
+    remediation:
+      retries: -1
+    createNamespace: true
+  upgrade:
+    remediation:
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: false
+  # Values from ConfigMap/Secret
+  valuesFrom:
+    - kind: ConfigMap
+      name: APP_NAME-values
+      optional: true
+  # Inline values (can also be used)
+  # values:
+  #   key: value

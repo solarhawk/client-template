@@ -1,0 +1,9 @@
+# Template: Replace APP_NAME with your application name
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: APP_NAME
+  labels:
+    app.kubernetes.io/name: APP_NAME
+    app.kubernetes.io/component: client-app
+    app.kubernetes.io/managed-by: flux

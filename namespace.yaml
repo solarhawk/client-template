@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dorkomen
+  labels:
+    app.kubernetes.io/name: dorkomen
+    app.kubernetes.io/component: platform

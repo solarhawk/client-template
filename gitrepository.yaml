@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: dorkomen
+spec:
+  ignore: |
+    # exclude file extensions
+    /**/*.md
+    /**/*.txt
+    /**/*.sh
+  interval: 10m
+  # UPDATE: Point to your Git repository containing the Dorkomen chart
+  url: https://github.com/your-org/dorkomen-chart.git
+  ref:
+    branch: main
+    # Or use a specific tag:
+    # tag: v0.1.0

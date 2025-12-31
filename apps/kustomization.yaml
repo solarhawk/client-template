@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Client applications to deploy alongside the base chart
+resources:
+  # Google Cloud Platform's microservices-demo (Online Boutique)
+  - microservices-demo
+
+  # Add your custom apps below:
+  # - my-custom-app
+  # - another-app

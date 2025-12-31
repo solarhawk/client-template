@@ -1,0 +1,16 @@
+# Template kustomization for a single app
+# Copy this entire directory and customize for your app
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - helmrelease.yaml
+  # Uncomment if using git source:
+  # - gitrepository.yaml
+
+# Optional: Generate a values ConfigMap
+# configMapGenerator:
+#   - name: APP_NAME-values
+#     files:
+#       - values.yaml

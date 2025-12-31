@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dorkomen
+spec:
+  targetNamespace: dorkomen
+  releaseName: dorkomen
+  interval: 10m
+  chart:
+    spec:
+      # Path to the chart within the GitRepository
+      chart: base/chart
+      sourceRef:
+        kind: GitRepository
+        name: dorkomen
+  test:
+    enable: false
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: false
+  valuesFrom:
+    # Secret for sensitive values (passwords, tokens, etc.)
+    - kind: Secret
+      name: common-dk
+    # ConfigMap for common non-sensitive values
+    - kind: ConfigMap
+      name: common
+    # Environment-specific secret overrides
+    - kind: Secret
+      name: environment-dk
+    # Environment-specific configmap overrides
+    - kind: ConfigMap
+      name: environment

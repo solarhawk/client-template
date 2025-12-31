@@ -1,0 +1,61 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dorkomen
+
+resources:
+  - ../../
+  # Add dev-specific apps here:
+  # - apps/dev-only-app
+
+# Patch the GitRepository to use your dev-specific settings
+patches:
+  - target:
+      kind: GitRepository
+      name: dorkomen
+    patch: |
+      - op: replace
+        path: /spec/ref
+        value:
+          branch: develop
+  # Patch microservices-demo ingress/certificate for dev domain
+  - target:
+      kind: IngressRoute
+      name: microservices-demo
+      namespace: microservices-demo
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`boutique.dev.dorkomen.local`)
+  - target:
+      kind: IngressRoute
+      name: microservices-demo-http-redirect
+      namespace: microservices-demo
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`boutique.dev.dorkomen.local`)
+  - target:
+      kind: Certificate
+      name: microservices-demo-tls
+      namespace: microservices-demo
+    patch: |
+      - op: replace
+        path: /spec/commonName
+        value: boutique.dev.dorkomen.local
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - boutique.dev.dorkomen.local
+
+configMapGenerator:
+  - name: environment
+    behavior: replace
+    files:
+      - values.yaml=configmap-values.yaml
+
+secretGenerator:
+  - name: environment-dk
+    behavior: replace
+    files:
+      - values.yaml=secret-values.yaml

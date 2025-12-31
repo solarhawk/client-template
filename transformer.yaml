@@ -1,0 +1,11 @@
+# Kustomize transformer configuration
+# Ensures ConfigMap and Secret name references are updated with suffixes
+nameReference:
+  - kind: ConfigMap
+    fieldSpecs:
+      - path: spec/valuesFrom/name
+        kind: HelmRelease
+  - kind: Secret
+    fieldSpecs:
+      - path: spec/valuesFrom/name
+        kind: HelmRelease

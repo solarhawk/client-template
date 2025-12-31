@@ -1,0 +1,61 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dorkomen
+
+resources:
+  - ../../
+  # Add prod-specific apps here:
+  # - apps/prod-only-app
+
+# Patch the GitRepository to use a specific version tag
+patches:
+  - target:
+      kind: GitRepository
+      name: dorkomen
+    patch: |
+      - op: replace
+        path: /spec/ref
+        value:
+          tag: v0.1.0
+  # Patch microservices-demo ingress/certificate for prod domain
+  - target:
+      kind: IngressRoute
+      name: microservices-demo
+      namespace: microservices-demo
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`boutique.dorkomen.example.com`)
+  - target:
+      kind: IngressRoute
+      name: microservices-demo-http-redirect
+      namespace: microservices-demo
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`boutique.dorkomen.example.com`)
+  - target:
+      kind: Certificate
+      name: microservices-demo-tls
+      namespace: microservices-demo
+    patch: |
+      - op: replace
+        path: /spec/commonName
+        value: boutique.dorkomen.example.com
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - boutique.dorkomen.example.com
+
+configMapGenerator:
+  - name: environment
+    behavior: replace
+    files:
+      - values.yaml=configmap-values.yaml
+
+secretGenerator:
+  - name: environment-dk
+    behavior: replace
+    files:
+      - values.yaml=secret-values.yaml

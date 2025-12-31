@@ -1,0 +1,34 @@
+# Development environment values
+# These values are stored in a ConfigMap and are NOT sensitive
+
+domain: dev.dorkomen.local
+
+# Enable/disable packages for development
+eckOperator:
+  enabled: true
+
+fluentbit:
+  enabled: true
+  values:
+    config:
+      outputs: |
+        [OUTPUT]
+            Name stdout
+            Match *
+            Format json
+
+gitlab:
+  enabled: false
+
+gitlabRunner:
+  enabled: false
+
+argocd:
+  enabled: true
+  values:
+    server:
+      replicas: 1
+
+# Network policies - relaxed for development
+networkPolicies:
+  enabled: false

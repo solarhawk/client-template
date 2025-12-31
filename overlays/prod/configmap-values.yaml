@@ -1,0 +1,58 @@
+# Production environment values
+# These values are stored in a ConfigMap and are NOT sensitive
+
+domain: dorkomen.example.com
+
+# Enable all packages for production
+eckOperator:
+  enabled: true
+
+fluentbit:
+  enabled: true
+  values:
+    # Ship logs to Elasticsearch
+    config:
+      outputs: |
+        [OUTPUT]
+            Name es
+            Match *
+            Host elasticsearch-es-http.elastic-system
+            Port 9200
+            Logstash_Format On
+            Retry_Limit 5
+            tls On
+            tls.verify Off
+
+gitlab:
+  enabled: true
+  values:
+    global:
+      hosts:
+        domain: dorkomen.example.com
+        https: true
+
+gitlabRunner:
+  enabled: true
+  values:
+    gitlabUrl: https://gitlab.dorkomen.example.com
+
+argocd:
+  enabled: true
+  values:
+    server:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 5
+    controller:
+      replicas: 2
+    repoServer:
+      replicas: 2
+      autoscaling:
+        enabled: true
+
+# Network policies - enforced for production
+networkPolicies:
+  enabled: true
+  controlPlaneCidr: 10.0.0.0/8

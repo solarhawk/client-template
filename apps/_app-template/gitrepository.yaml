@@ -1,0 +1,20 @@
+# Template: Use this if sourcing chart from Git instead of HelmRepository
+# Replace APP_NAME, GIT_URL, BRANCH/TAG
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: APP_NAME
+  namespace: dorkomen
+spec:
+  interval: 10m
+  url: GIT_URL
+  ref:
+    branch: main
+    # Or use a specific tag:
+    # tag: v1.0.0
+  ignore: |
+    /**/*.md
+    /**/*.txt
+  # For private repos, reference a secret:
+  # secretRef:
+  #   name: APP_NAME-git-credentials
