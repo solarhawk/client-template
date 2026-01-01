@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: harvester-apps
+  namespace: argocd
+spec:
+  description: Applications deployed to Harvester cluster
+  sourceRepos:
+    - '*'  # Or specify exact repos for tighter security
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc  # In-cluster deployment
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

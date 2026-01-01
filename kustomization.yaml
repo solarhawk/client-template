@@ -13,6 +13,7 @@ resources:
   - namespace.yaml
   - gitrepository.yaml
   - helmrelease.yaml
+  - argocd-project.yaml
   # Client-specific apps (add your own HelmReleases here)
   - apps
 
