@@ -1,0 +1,17 @@
+# TLS Certificate for Online Boutique frontend
+# Uses letsencrypt-prod for valid certificates
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: boutique-tls
+  labels:
+    app.kubernetes.io/name: online-boutique
+    app.kubernetes.io/component: ingress
+spec:
+  secretName: boutique-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: boutique.dorkomen.us
+  dnsNames:
+    - boutique.dorkomen.us

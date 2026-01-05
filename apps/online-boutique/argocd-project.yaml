@@ -1,0 +1,35 @@
+# ArgoCD Project for Online Boutique team
+# Provides RBAC isolation and deployment boundaries
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: online-boutique
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: online-boutique
+    app.kubernetes.io/component: argocd-project
+spec:
+  description: Online Boutique e-commerce demo application
+
+  # Only allow deploying to the online-boutique namespace
+  destinations:
+    - namespace: online-boutique
+      server: https://kubernetes.default.svc
+
+  # Source repositories allowed for this project
+  sourceRepos:
+    - '*'
+
+  # Cluster resources this project can manage
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+
+  # Namespaced resources this project can manage
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  # Orphaned resource monitoring
+  orphanedResources:
+    warn: true

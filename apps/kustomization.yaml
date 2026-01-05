@@ -4,9 +4,12 @@ kind: Kustomization
 # Client applications to deploy alongside the base chart
 # These demonstrate different deployment patterns:
 resources:
-  # Helm-based app: Google's Online Boutique (microservices-demo)
-  # Uses GitRepository + HelmRelease pattern
-  - microservices-demo
+  # App-of-Apps pattern: Online Boutique e-commerce demo
+  # Uses ArgoCD ApplicationSet to deploy each microservice independently
+  # - Separate ArgoCD Application per microservice
+  # - Own ArgoCD Project for team isolation
+  # - Independent scaling, rollback, and deployment
+  - online-boutique
 
   # Manifest-based app: Simple whoami service
   # Uses raw Kubernetes manifests (Deployment, Service, etc.)

@@ -16,38 +16,6 @@ patches:
         path: /spec/ref
         value:
           tag: v0.1.0
-  # Patch microservices-demo ingress/certificate for prod domain
-  - target:
-      kind: IngressRoute
-      name: microservices-demo
-      namespace: microservices-demo
-    patch: |
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`boutique.dorkomen.example.com`)
-  - target:
-      kind: IngressRoute
-      name: microservices-demo-http-redirect
-      namespace: microservices-demo
-    patch: |
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`boutique.dorkomen.example.com`)
-  - target:
-      kind: Certificate
-      name: microservices-demo-tls
-      namespace: microservices-demo
-    patch: |
-      - op: replace
-        path: /spec/issuerRef/name
-        value: letsencrypt-prod
-      - op: replace
-        path: /spec/commonName
-        value: boutique.dorkomen.example.com
-      - op: replace
-        path: /spec/dnsNames
-        value:
-          - boutique.dorkomen.example.com
   # Patch whoami app for prod domain
   - target:
       kind: IngressRoute

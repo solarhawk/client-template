@@ -1,0 +1,54 @@
+# ArgoCD ApplicationSet - generates one Application per microservice
+# This is the App-of-Apps pattern using ApplicationSet
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: online-boutique-services
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: online-boutique
+    app.kubernetes.io/component: applicationset
+spec:
+  generators:
+    # Git directory generator - creates an app for each service directory
+    - git:
+        repoURL: https://github.com/solarhawk/client-template.git
+        revision: HEAD
+        directories:
+          - path: apps/online-boutique/services/*
+
+  template:
+    metadata:
+      # App name = directory name (e.g., frontend, cartservice)
+      name: 'boutique-{{path.basename}}'
+      namespace: argocd
+      labels:
+        app.kubernetes.io/name: '{{path.basename}}'
+        app.kubernetes.io/part-of: online-boutique
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: online-boutique
+
+      source:
+        repoURL: https://github.com/solarhawk/client-template.git
+        targetRevision: HEAD
+        path: '{{path}}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: online-boutique
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+          - PruneLast=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

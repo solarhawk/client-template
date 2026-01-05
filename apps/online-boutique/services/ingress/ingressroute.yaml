@@ -1,0 +1,19 @@
+# Traefik IngressRoute for Online Boutique frontend
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: boutique
+  labels:
+    app.kubernetes.io/name: online-boutique
+    app.kubernetes.io/component: ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`boutique.dorkomen.us`)
+      kind: Rule
+      services:
+        - name: frontend
+          port: 80
+  tls:
+    secretName: boutique-tls
