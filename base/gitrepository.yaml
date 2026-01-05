@@ -9,8 +9,7 @@ spec:
     /**/*.txt
     /**/*.sh
   interval: 10m
-  # UPDATE: Point to your Git repository containing the Dorkomen chart
-  url: https://github.com/your-org/dorkomen-chart.git
+  url: https://github.com/solarhawk/base.git
   ref:
     branch: main
     # Or use a specific tag:
