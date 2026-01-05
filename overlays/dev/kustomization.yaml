@@ -24,7 +24,7 @@ patches:
     patch: |
       - op: replace
         path: /spec/routes/0/match
-        value: Host(`boutique.dev.dorkomen.local`)
+        value: Host(`boutique.dorkomen.us`)
   - target:
       kind: IngressRoute
       name: microservices-demo-http-redirect
@@ -32,19 +32,22 @@ patches:
     patch: |
       - op: replace
         path: /spec/routes/0/match
-        value: Host(`boutique.dev.dorkomen.local`)
+        value: Host(`boutique.dorkomen.us`)
   - target:
       kind: Certificate
       name: microservices-demo-tls
       namespace: microservices-demo
     patch: |
       - op: replace
+        path: /spec/issuerRef/name
+        value: letsencrypt-prod
+      - op: replace
         path: /spec/commonName
-        value: boutique.dev.dorkomen.local
+        value: boutique.dorkomen.us
       - op: replace
         path: /spec/dnsNames
         value:
-          - boutique.dev.dorkomen.local
+          - boutique.dorkomen.us
 
 configMapGenerator:
   - name: environment

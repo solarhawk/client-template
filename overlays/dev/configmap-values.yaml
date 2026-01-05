@@ -1,7 +1,10 @@
 # Development environment values
 # These values are stored in a ConfigMap and are NOT sensitive
 
-domain: dev.dorkomen.local
+domain: dorkomen.us
+
+# Use Let's Encrypt for valid TLS certificates
+clusterIssuer: letsencrypt-prod
 
 # Enable/disable packages for development
 eckOperator:
