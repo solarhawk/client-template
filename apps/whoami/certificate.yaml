@@ -1,0 +1,18 @@
+# TLS Certificate for whoami
+# Domain is patched by overlays
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: whoami-tls
+  namespace: whoami
+  labels:
+    app.kubernetes.io/name: whoami
+    app.kubernetes.io/component: demo-app
+spec:
+  secretName: whoami-tls
+  issuerRef:
+    name: dorkomen-ca
+    kind: ClusterIssuer
+  commonName: whoami.DOMAIN
+  dnsNames:
+    - whoami.DOMAIN

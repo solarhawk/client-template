@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Simple manifest-based app example (no Helm)
+# Demonstrates deploying raw Kubernetes manifests
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - certificate.yaml
+  - ingressroute.yaml
+  - http-redirect.yaml

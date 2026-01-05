@@ -48,6 +48,38 @@ patches:
         path: /spec/dnsNames
         value:
           - boutique.dorkomen.example.com
+  # Patch whoami app for prod domain
+  - target:
+      kind: IngressRoute
+      name: whoami
+      namespace: whoami
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`whoami.dorkomen.example.com`)
+  - target:
+      kind: IngressRoute
+      name: whoami-http-redirect
+      namespace: whoami
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`whoami.dorkomen.example.com`)
+  - target:
+      kind: Certificate
+      name: whoami-tls
+      namespace: whoami
+    patch: |
+      - op: replace
+        path: /spec/issuerRef/name
+        value: letsencrypt-prod
+      - op: replace
+        path: /spec/commonName
+        value: whoami.dorkomen.example.com
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - whoami.dorkomen.example.com
 
 configMapGenerator:
   - name: environment
