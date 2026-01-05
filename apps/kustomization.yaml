@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 # Client applications to deploy alongside the base chart
-# These demonstrate different deployment patterns:
 resources:
   # App-of-Apps pattern: Online Boutique e-commerce demo
   # Uses ArgoCD ApplicationSet to deploy each microservice independently
@@ -10,10 +9,6 @@ resources:
   # - Own ArgoCD Project for team isolation
   # - Independent scaling, rollback, and deployment
   - online-boutique
-
-  # Manifest-based app: Simple whoami service
-  # Uses raw Kubernetes manifests (Deployment, Service, etc.)
-  - whoami
 
   # Add your custom apps below:
   # - my-custom-app
