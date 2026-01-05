@@ -48,6 +48,8 @@ spec:
               value: "adservice:9555"
             - name: SHOPPING_ASSISTANT_SERVICE_ADDR
               value: ""
+            - name: ENABLE_ASSISTANT
+              value: "false"
             - name: ENABLE_PROFILER
               value: "0"
           resources:
