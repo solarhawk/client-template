@@ -15,7 +15,7 @@ patches:
       - op: replace
         path: /spec/ref
         value:
-          branch: develop
+          branch: main
   # Patch microservices-demo ingress/certificate for dev domain
   - target:
       kind: IngressRoute
