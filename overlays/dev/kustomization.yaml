@@ -4,7 +4,10 @@ kind: Kustomization
 namespace: dorkomen
 
 resources:
-  - ../../
+  - ../../namespace.yaml
+  - ../../gitrepository.yaml
+  - ../../helmrelease.yaml
+  - ../../apps
   # Add dev-specific apps here:
   # - apps/dev-only-app
 
