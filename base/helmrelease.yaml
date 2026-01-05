@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       # Path to the chart within the GitRepository
-      chart: base/chart
+      chart: chart
       sourceRef:
         kind: GitRepository
         name: dorkomen
