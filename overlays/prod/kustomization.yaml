@@ -39,6 +39,9 @@ patches:
       namespace: microservices-demo
     patch: |
       - op: replace
+        path: /spec/issuerRef/name
+        value: letsencrypt-prod
+      - op: replace
         path: /spec/commonName
         value: boutique.dorkomen.example.com
       - op: replace

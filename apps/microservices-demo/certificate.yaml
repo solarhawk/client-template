@@ -12,7 +12,7 @@ metadata:
 spec:
   secretName: microservices-demo-tls
   issuerRef:
-    name: letsencrypt-prod
+    name: dorkomen-ca
     kind: ClusterIssuer
   commonName: boutique.DOMAIN
   dnsNames:
