@@ -11,8 +11,6 @@ labels:
 
 resources:
   - namespace.yaml
-  - gitrepository.yaml
-  - helmrelease.yaml
   - argocd-project.yaml
   - ../apps
 

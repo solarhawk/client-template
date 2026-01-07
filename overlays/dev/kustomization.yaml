@@ -6,17 +6,8 @@ resources:
   # Add dev-specific apps here:
   # - apps/dev-only-app
 
-# Patch the GitRepository to use your dev-specific settings
+# Patch whoami app for domain
 patches:
-  - target:
-      kind: GitRepository
-      name: dorkomen
-    patch: |
-      - op: replace
-        path: /spec/ref
-        value:
-          branch: main
-  # Patch whoami app for domain
   - target:
       kind: IngressRoute
       name: whoami
