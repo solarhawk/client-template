@@ -13,6 +13,8 @@ spec:
       app: cartservice
   template:
     metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-dotnet: "opentelemetry-operator-system/elastic-apm"
       labels:
         app: cartservice
         app.kubernetes.io/name: cartservice

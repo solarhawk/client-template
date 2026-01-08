@@ -13,6 +13,8 @@ spec:
       app: shippingservice
   template:
     metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-go: "opentelemetry-operator-system/elastic-apm"
       labels:
         app: shippingservice
         app.kubernetes.io/name: shippingservice

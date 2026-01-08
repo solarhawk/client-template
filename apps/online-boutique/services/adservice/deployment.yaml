@@ -13,6 +13,8 @@ spec:
       app: adservice
   template:
     metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "opentelemetry-operator-system/elastic-apm"
       labels:
         app: adservice
         app.kubernetes.io/name: adservice

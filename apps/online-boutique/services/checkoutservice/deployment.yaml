@@ -13,6 +13,8 @@ spec:
       app: checkoutservice
   template:
     metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-go: "opentelemetry-operator-system/elastic-apm"
       labels:
         app: checkoutservice
         app.kubernetes.io/name: checkoutservice

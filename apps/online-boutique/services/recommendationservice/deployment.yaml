@@ -13,6 +13,8 @@ spec:
       app: recommendationservice
   template:
     metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-python: "opentelemetry-operator-system/elastic-apm"
       labels:
         app: recommendationservice
         app.kubernetes.io/name: recommendationservice

@@ -13,6 +13,8 @@ spec:
       app: frontend
   template:
     metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-go: "opentelemetry-operator-system/elastic-apm"
       labels:
         app: frontend
         app.kubernetes.io/name: frontend
