@@ -1,0 +1,55 @@
+# ArgoCD ApplicationSet for load tests
+# Generates one Application per load test directory
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: loadtests
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: loadtests
+    app.kubernetes.io/component: testing
+spec:
+  generators:
+    # Git directory generator - creates an app for each load test directory
+    - git:
+        repoURL: https://github.com/solarhawk/client-template.git
+        revision: HEAD
+        directories:
+          - path: apps/loadtests/*
+          - path: apps/loadtests
+            exclude: true
+
+  template:
+    metadata:
+      name: 'loadtest-{{path.basename}}'
+      namespace: argocd
+      labels:
+        app.kubernetes.io/name: '{{path.basename}}'
+        app.kubernetes.io/part-of: loadtests
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: loadtests
+
+      source:
+        repoURL: https://github.com/solarhawk/client-template.git
+        targetRevision: HEAD
+        path: '{{path}}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: loadtests
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

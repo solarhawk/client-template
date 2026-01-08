@@ -1,0 +1,30 @@
+apiVersion: k6.io/v1alpha1
+kind: TestRun
+metadata:
+  name: boutique-loadtest
+  labels:
+    app.kubernetes.io/name: online-boutique-loadtest
+    app.kubernetes.io/part-of: loadtests
+    app.kubernetes.io/component: testing
+spec:
+  parallelism: 1
+  script:
+    configMap:
+      name: boutique-loadtest-script
+      file: script.js
+  runner:
+    image: grafana/k6:latest
+    env:
+      - name: FRONTEND_URL
+        value: "http://frontend.online-boutique.svc.cluster.local:80"
+      - name: VUS
+        value: "15"
+      - name: DURATION
+        value: "30m"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

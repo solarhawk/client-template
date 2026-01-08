@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: loadtests
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: loadtests
+    app.kubernetes.io/component: testing
+spec:
+  description: Load testing resources
+
+  # Allow deploying to loadtests namespace
+  destinations:
+    - namespace: loadtests
+      server: https://kubernetes.default.svc
+
+  # Allow any source repo
+  sourceRepos:
+    - '*'
+
+  # Allow all cluster-scoped resources needed for k6
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    - group: k6.io
+      kind: TestRun
+
+  # Allow all namespaced resources
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: '*'
+    - group: k6.io
+      kind: '*'

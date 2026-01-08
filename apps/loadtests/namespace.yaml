@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: loadtests
+  labels:
+    app.kubernetes.io/name: loadtests
+    app.kubernetes.io/component: testing

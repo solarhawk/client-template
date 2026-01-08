@@ -10,5 +10,9 @@ resources:
   # - Independent scaling, rollback, and deployment
   - online-boutique
 
+  # Load tests - k6 based load testing
+  # Deployed in separate namespace for isolation
+  - loadtests
+
   # Add your custom apps below:
   # - my-custom-app
